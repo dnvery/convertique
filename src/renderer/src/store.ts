@@ -72,6 +72,10 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ config });
   },
 
+  getConfig: () => {
+    return get().config;
+  },
+
   setFbcVersion: (version) => {
     set({ fbcVersion: version });
   },

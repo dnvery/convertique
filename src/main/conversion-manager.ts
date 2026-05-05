@@ -88,7 +88,7 @@ function getOutputExtension(format: ConversionTask['format']): string {
 function buildArgs(task: ConversionTask, configPath: string): string[] {
   const args = ['convert', '-c', configPath];
 
-  if (task.overwrite) args.push('--overwrite');
+  args.push('--overwrite');
   if (task.noDirs) args.push('--no-dirs');
   if (task.forceZipCp) args.push('--force-zip-cp', task.forceZipCp);
   if (task.asin) args.push('--asin', task.asin);

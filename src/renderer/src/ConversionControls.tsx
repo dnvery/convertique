@@ -29,13 +29,17 @@ export function ConversionControls() {
     tasks.forEach((t) => updateFileStatus(t.id, 'converting'));
 
     try {
-      const cfg = config ?? getDefaultConfig();
+      const storeConfig = useAppStore.getState().config;
+      const cfg = storeConfig ?? getDefaultConfig();
+      console.log('Image screen width in config:', cfg?.document?.images?.screen?.width);
       await ensureApi().convertStart(tasks, cfg);
     } catch (err) {
       console.error('Conversion error:', err);
       tasks.forEach((t) => updateFileStatus(t.id, 'error'));
+    } finally {
+      setIsConverting(false);
     }
-  }, [files, selectedFormat, outputDirectory, isConverting, setIsConverting, updateFileStatus, config]);
+  }, [files, selectedFormat, outputDirectory, isConverting, setIsConverting, updateFileStatus]);
 
   const handleSelectOutput = useCallback(async () => {
     try {
