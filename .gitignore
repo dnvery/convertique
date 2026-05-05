@@ -1,0 +1,13 @@
+node_modules/
+.vite/
+dist/
+out/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.local
+result
+PLAN.md
+flake.lock
+tsconfig.tsbuildinfo
