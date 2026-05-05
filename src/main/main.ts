@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import { registerIpcHandlers } from './ipc-handlers';
+import { registerIpcHandlers, setMainWindow } from './ipc-handlers';
 
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
@@ -25,6 +25,9 @@ function createWindow(): void {
 
   mainWindow.once('ready-to-show', () => {
     mainWindow?.show();
+    if (mainWindow) {
+      setMainWindow(mainWindow);
+    }
   });
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -38,17 +41,11 @@ function createWindow(): void {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  mainWindow.webContents.on('did-fail-load', (_event, _code, desc) => {
-    console.error('[Convertique] Renderer failed to load:', desc);
-  });
 }
 
 app.whenReady().then(() => {
-  console.log('[Convertique] App ready, creating window...');
   registerIpcHandlers();
   createWindow();
-  console.log('[Convertique] Window created:', mainWindow !== null);
 });
 
 app.on('window-all-closed', () => {
@@ -62,5 +59,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-export { mainWindow };

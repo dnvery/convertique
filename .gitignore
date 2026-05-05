@@ -11,3 +11,4 @@ result
 PLAN.md
 flake.lock
 tsconfig.tsbuildinfo
+bin/
