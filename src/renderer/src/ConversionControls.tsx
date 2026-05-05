@@ -34,8 +34,6 @@ export function ConversionControls() {
     } catch (err) {
       console.error('Conversion error:', err);
       tasks.forEach((t) => updateFileStatus(t.id, 'error'));
-    } finally {
-      setIsConverting(false);
     }
   }, [files, selectedFormat, outputDirectory, isConverting, setIsConverting, updateFileStatus, config]);
 

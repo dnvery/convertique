@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from './store';
-import { ensureApi, api } from './api';
+import { api, ensureApi } from './api';
 import { DropZone } from './DropZone';
 import { FileQueue } from './FileQueue';
 import { FormatSelector } from './FormatSelector';
 import { ConversionControls } from './ConversionControls';
+import { SettingsPanel } from './SettingsPanel';
 import { ConversionResult } from '../../shared/types';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
   const setIsConverting = useAppStore((s) => s.setIsConverting);
   const updateFileStatus = useAppStore((s) => s.updateFileStatus);
   const fbcVersion = useAppStore((s) => s.fbcVersion);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -56,10 +58,16 @@ export default function App() {
           <h1 className="text-xl font-bold tracking-tight text-white">Convertique</h1>
           <p className="text-xs text-gray-500">FB2 to EPUB / AZW8 / KFX converter</p>
         </div>
-        <div className="text-right">
+        <div className="flex items-center gap-4">
           <p className="text-xs text-gray-500">
             fbc: <span className="text-gray-400">{fbcVersion || 'not found'}</span>
           </p>
+          <button
+            onClick={() => setSettingsOpen(true)}
+            className="rounded-lg bg-gray-800 px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-700"
+          >
+            Settings
+          </button>
         </div>
       </header>
 
@@ -71,6 +79,8 @@ export default function App() {
           <ConversionControls />
         </div>
       </main>
+
+      <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 }
