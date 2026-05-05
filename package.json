@@ -11,8 +11,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx,css,html,json}'",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "bash scripts/patch-electron.sh"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "fb2",
